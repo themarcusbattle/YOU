@@ -1,10 +1,16 @@
-<? date_default_timezone_set('America/New_York');  ?>
+<? date_default_timezone_set('America/New_York');  
+	
+	if($_SERVER['HTTP_HOST'] == 'marcbook.local') 
+		$path = '/mb/you/';
+	else
+		$path = '/';
+?>
 
 <!DOCTYPE html>
 <html>
   <head>
     <title>Project YOU</title>
-    <base href="/mb/you/" target="_self">
+    <base href="<?=$path?>" target="_self">
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
     <link href="styles.css" rel="stylesheet" media="screen" />
   </head>
@@ -20,9 +26,10 @@
           <a class="brand" href="">Project YOU</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li><a href="places">Places</a></li>
-              <li><a href="projects">Projects</a></li>
-              <li><a href="tasks">Ongoing</a></li>
+              <li><a href="#places">Places</a></li>
+              <li><a href="#projects">Projects</a></li>
+              <li><a href="#tasks">Ongoing</a></li>
+              <li><a href="#goals">Goals</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

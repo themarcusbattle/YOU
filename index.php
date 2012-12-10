@@ -89,7 +89,7 @@
 	<p>&nbsp;</p>
 	<h1>Projects</h1>
 	<h4>Campus Visits 1.0</h4>
-	<ul>
+	<ul class="checklist">
 		<li>if a date is changed we need to cancel the current appointment and create a new appointment, since the import would not know if someone wanted to have multiple visits schedules <span class="label label-important">Important</span></li>
 		<li>Add an extra box for counselor notes to go into colleague </li>
 		<li>Modify Alex Rozaklis (Open House), James Meeker (needs high school), Presley Olsson (776977 start term should be 2014, no high school, origin code should be A05), Brad Rivera (change to A05), Emily Heavner (no school)</li>
@@ -108,7 +108,7 @@
 		<li>Add prompt for an individual who does not have a highschool (if you can't find your high school, enter in the name)</li>
 		<li>Add admissions rating to end of contact.csv</li>
 		<li>Student Legend, always grey but when they're on campus they turn blue. Highlight them only when they're. If no show. </li>
-		<li>Import all tables into tux pan <span class="label label-important">Important</span></li>
+		<li>Import all tables into tux pan <span class="label label-success">Done</span></li>
 		<li>Add international high school to admin view</li>
 		<li>Update Mick Hattakanont's Information (International menu has to be added to admin view)</li>
 		<li>Fix display error for Saturday Noon Times. They are displaying as 12AM.</li>
@@ -116,8 +116,8 @@
 		<li>Figure out why Miles Maynard not in DATATEL. 9:00AM for 12/7/12</li>
 		<li>Add date_exported date so that reports run on the same day or time can be re-run together <span class="label label-important">Important</span></li>
 		<li>Help Andy, with his layout in ie (most likely IE7) <span class="label label-important">Important</span></li>
-		<li>Remove the 2 day delay <span class="label label-important">Important</span></li>
-		<li>Add a 2hr delay for day of tours and also have a message to contact if less than two hours <span class="label label-important">Important</span></li>
+		<li>Remove the 2 day delay <span class="label label-success">Done</span></li>
+		<li>Add a 2hr delay for day of tours and also have a message to contact if less than two hours <span class="label label-info">In Progress</span></li>
 		<li>Cancel Andrew Cummings for 12/7/12 at 3:00. Not supposed to be there.</li>
 		<li>Remove Cancellations from</li>
 	</ul>
@@ -171,15 +171,25 @@
 				<th>Role</th>
 				<th>Place</th>
 				<th>Date Created</th>
+				<th>Date Completed</th>
 			</tr>	
 		</thead>
 		<tbody>
 			<tr>
 				<td><input type="checkbox" /></td>
-				<td>Ask Summit to send recent achievements to be featured online.</td>
+				<td>Ask Summit to send recent achievements to be featured online</td>
 				<td>College Pastor</td>
 				<td>Church</td>
 				<td>12/7/12</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" /></td>
+				<td>Help Hilary with analytics for http://ww.highpoint.edu/christmas</td>
+				<td>Web Developer</td>
+				<td>HPU</td>
+				<td>12/10/12</td>
+				<td></td>
 			</tr>
 		</tbody>
 	</table>
