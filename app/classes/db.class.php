@@ -9,19 +9,84 @@ abstract class Db {
 	
 	public $db = NULL;
 	
-	public function __construct($params = array()){
+	public function __construct($params = array(),$tables = array()){
 		$this->db_type = $params['type']; // defines type of db (i.e. mssql, mysql, etc)
 		$this->db_host = $params['host'];
-		$this->db_name = $params['dbname'];
+			$this->db_name = $params['dbname'];
 		$this->db_user = $params['dbuser'];
 		$this->db_pass = $params['dbpass'];
 		
 		$this->db = new PDO("$this->db_type:host=$this->db_host;dbname=$this->db_name", $this->db_user, $this->db_pass);
 		$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+		
+		self::createTables($tables);
 	}
 	
 	/** HELPER FUNCTIONS **/
+	private function createTables($tables = array()) {
+		
+		foreach($tables as $table => $cols) {
+			if(!self::getTable($table)){ // If table doesn't exist make it
+				$table_created = self::createTable($table,$cols);
+				echo "table $table created <br />";
+			} else {
+				$table_altered = self::alterTable($table,$cols);
+				echo "table $table altered <br />";
+			}
+		}
+	}
+	
+	
+	
+	private function getTable($table) {
+		$sql = "SHOW TABLES LIKE :table";
+	
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute(array(
+			'table' => $table
+		));
+	
+		return $stmt->fetch();
+	}
+	
+	private function createTable($table = '',$cols = array()) {
+		$sql 	= "CREATE TABLE $table";
+		
+		if($cols) {
+			$sql .= " (";
+			foreach($cols['cols'] as $col => $data_type) {
+				$sql .= "$col $data_type,";
+			}
+			
+			// Check for last comma
+			$pos = strrpos($sql, ',');
+			if($pos !== false) {
+				$sql = substr_replace($sql, '', $pos, 1);
+	    }
+			
+			// Assign Primary Key
+			if(isset($cols['primary_key'])) {
+				$sql .= ", PRIMARY KEY (" . $cols['primary_key'] . ")";
+			}
+			
+			$sql .= ")";
+		} else {
+			echo "$table needs at least one column to be created <br />";
+			return false;
+		}
+		
+		
+		echo $sql; 
+		$response = $this->db->query($sql);
+		return $response;
+	}
+	
+	private function alterTable($table = '',$cols = array()) {
+		$sql = "
+			CREATE TABLE
+		";
+	}
 	
 	// return all tables from the db
 	public function getAllTables() {
