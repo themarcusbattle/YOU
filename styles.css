@@ -6,3 +6,20 @@ body {
 	
 .media-object {
 	max-width: 150px; }
+	
+	
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) { 
+
+	body {
+		padding-top: 0; }
+		
+}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) { 
+	
+	body {
+		padding-top: 0; }
+
+}

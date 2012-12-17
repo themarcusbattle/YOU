@@ -29,16 +29,14 @@ abstract class Db {
 		foreach($tables as $table => $cols) {
 			if(!self::getTable($table)){ // If table doesn't exist make it
 				$table_created = self::createTable($table,$cols);
-				echo "table $table created <br />";
+				// echo "table $table created <br />";
 			} else {
 				$table_altered = self::alterTable($table,$cols);
-				echo "table $table altered <br />";
+				// echo "table $table altered <br />";
 			}
 		}
 	}
-	
-	
-	
+
 	private function getTable($table) {
 		$sql = "SHOW TABLES LIKE :table";
 	
@@ -76,8 +74,6 @@ abstract class Db {
 			return false;
 		}
 		
-		
-		echo $sql; 
 		$response = $this->db->query($sql);
 		return $response;
 	}

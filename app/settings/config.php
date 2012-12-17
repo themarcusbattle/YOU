@@ -43,7 +43,8 @@
 			'primary_key' => 'place_id',
 			'cols' => array(
 				'place_id' => 'INT(11) NOT NULL AUTO_INCREMENT',
-				'name' => 'VARCHAR(50)'
+				'name' => 'VARCHAR(50)',
+				'date_created' => 'DATETIME'
 			)
 		),
 		'roles' => array(
@@ -51,7 +52,8 @@
 			'cols' => array(
 				'role_id' => 'INT(11) NOT NULL AUTO_INCREMENT',
 				'label' => 'VARCHAR(50)',
-				'place_id' => 'INT(11)'
+				'place_id' => 'INT(11)',
+				'date_created' => 'DATETIME'
 			)
 		),
 		'projects' => array(
@@ -59,17 +61,47 @@
 			'cols' => array(
 				'project_id' => 'INT(11) NOT NULL AUTO_INCREMENT',
 				'name' => 'VARCHAR(50)',
-				'place_id' => 'INT(11)'
+				'place_id' => 'INT(11)',
+				'date_created' => 'DATETIME'
 			)
 		)
 	);
 
-
+	// Define Controllers for each table
+	foreach ($tables as $table => $cols) {
+		
+		// Create Controllers
+		if (!file_exists('mvc/controllers/' . $table . '.php')) {
+			$file = $table . '.php';
+			$filePath = 'mvc/controllers/' . $file;
+		
+			$fileStatus = fopen($filePath, 'w') or die("can't create file");
+			
+			$data  = '<?php';
+			$data .= "\n" . 'Class ' . $table . 'Controller Extends baseController {';
+			$data .= "\n";
+			$data .= "\n\t" . 'public function index() {';
+			$data .= "\n\t\t" .	'echo "Please setup this controller";';
+			$data .= "\n\t" . '}';
+			$data .= "\n";
+			$data .= "\n" . '} ?>';
+			
+			fwrite($fileStatus, $data);
+			fclose($fileStatus);
+			
+		} else {
+			//echo $table . '.php already exits'; 
+		}
+	}
+	
+	
 	// Define which mode your app is in (Acceptable values = test,development,production)
 	define ('__APP_MODE', $server[$_SERVER['HTTP_HOST']]['mode']);
 	
 	// Initialize any databases you've created in mvc/models
 	$registry->db = new db_local($server[$_SERVER['HTTP_HOST']]['database'],$tables);
+	$registry->server = $server;
+	$registry->tables = $tables;
 	
 	require_once("app/classes/stripe/Stripe.php");
 	Stripe::setApiKey("sk_0GPS3IYXhOF1TDkZTb9S7GaHznsZA");
