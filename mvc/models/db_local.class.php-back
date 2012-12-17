@@ -1,0 +1,307 @@
+<?php
+
+class db_local extends Db {
+
+	// CHUCHES OBJECT
+	
+	public function getChurches($params = array()) {
+		$sql = "
+			SELECT churches.*, COUNT(church_users.user_id) AS members FROM churches
+			LEFT JOIN church_users ON church_users.church_id = churches.church_id
+		";
+		$stmt = $this->db->query($sql);
+		$result = $stmt->fetchAll();
+		return $result;
+	}
+	
+	public function getChurch($params = array()) {
+		$sql = "SELECT * FROM churches WHERE church_id = :id";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute(array(
+			'id' => $params['church_id']
+		));
+		return $stmt->fetch();
+	}
+	
+	public function addChurch($params = array()) {
+		$sql = "
+			INSERT INTO churches
+			(church_token,name,state,city,zip,address,phone_main)
+			VALUES (:church_token,:name,:state,:city,:zip,:address,:phone_main)
+		";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute(array(
+			':church_token' => $params['church_token'],
+			':name' => $params['name'],
+			':state' => $params['state'],
+			':city' => $params['city'],
+			':zip' => $params['zip'],
+			':address' => $params['address'],
+			':phone_main' => $params['phone_main']
+		));
+		
+		return $this->db->lastInsertID();
+	}
+	
+	public function updateChurch($params = array()) {
+		$sql = "
+			UPDATE churches SET
+				name = :name,
+				state = :state,
+				city = :city,
+				zip = :zip,
+				address = :address,
+				phone_main = :phone_main,
+				date_modified = NOW()
+			WHERE
+				church_id = :id
+		";
+		$stmt = $this->db->prepare($sql);
+		$response = $stmt->execute(array(
+			':name' => $params['name'],
+			':state' => $params['state'],
+			':city' => $params['city'],
+			':zip' => $params['zip'],
+			':address' => $params['address'],
+			':phone_main' => $params['phone_main'],
+			':id' => $params['church_id']
+		));
+		
+		return $response;
+	}
+	
+	// END CHURCHES OBJECT
+
+	// USERS OBJECT
+	
+	public function getUsers($params = array()) {
+		$sql = "
+			SELECT users.*, churches.name AS church FROM users 
+			LEFT JOIN church_users ON church_users.user_id = users.user_id
+			LEFT JOIN churches ON churches.church_id = church_users.church_id
+		";
+		$stmt = $this->db->query($sql);
+		$result = $stmt->fetchAll();
+		return $result;
+	}
+	
+	public function getUser($params = array()) {
+		$sql = "
+			SELECT 
+				users.*, 
+				churches.name AS church,
+				churches.church_id 
+			FROM users 
+			LEFT JOIN church_users ON church_users.user_id = users.user_id
+			LEFT JOIN churches ON churches.church_id = church_users.church_id
+			WHERE users.user_id = :id
+		";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute(array(
+			'id' => $params['user_id']
+		));
+		return $stmt->fetch();
+	}
+
+	public function addUser($params = array()) {
+		$sql = "
+			INSERT INTO users
+			(user_token,first_name,last_name,email,password,zip)
+			VALUES (:user_token,:first_name,:last_name,:email,:password,:zip)
+		";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute(array(
+			':user_token' => $params['user_token'],
+			':first_name' => $params['first_name'],
+			':last_name' => $params['last_name'],
+			':email' => $params['email'],
+			':password' => $params['password'],
+			':zip' => $params['zip']
+		));
+		
+		if(isset($params['church_id'])) {
+			$params['user_id'] = $this->db->lastInsertID();
+			return self::addChurchUser($params);
+		} else {
+			return $this->db->lastInsertID();	
+		}
+	}
+	
+	public function addChurchUser($params = array()) {
+		$sql = "
+			INSERT INTO church_users
+			(church_id,user_id)
+			VALUES (:church_id,:user_id)
+		";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute(array(
+			':church_id' => $params['church_id'],
+			':user_id' => $params['user_id']
+		));
+		
+		return $params['user_id'];
+	}
+	
+	public function updateUser($params = array()) {
+		$sql = "
+			UPDATE users SET
+				first_name = :first_name,
+				last_name = :last_name,
+				email = :email,
+				zip = :zip,
+				date_modified = NOW()
+			WHERE
+				user_id = :id
+		";
+		$stmt = $this->db->prepare($sql);
+		$response = $stmt->execute(array(
+			':first_name' => $params['first_name'],
+			':last_name' => $params['last_name'],
+			':email' => $params['email'],
+			':zip' => $params['zip'],
+			':id' => $params['user_id']
+		));
+		
+		return $response;
+	}
+	
+	// END USERS OBJECT
+
+	// STATES OBJECT
+	
+	public function getStates($param = array()) {
+		$sql = "SELECT * FROM states";
+		$stmt = $this->db->query($sql);
+		$result = $stmt->fetchAll();
+		return $result;
+	}
+	
+	// END STATES OBJECT
+	
+	public function check_token($token) {
+		
+		$sql = "SELECT app_id FROM apps WHERE app_token = :app_token";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute(array(
+			'app_token' => $token
+		));
+		$result = $stmt->fetch();
+		return $result;
+	}
+	
+	public function get_customer($params = array()) {
+		
+		$sql = "SELECT * FROM customers WHERE customer_email = :email";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute(array(
+			'email' => $params['email']
+		));
+		$result = $stmt->fetch();
+		return $result;
+	}
+	
+	public function create_customer($params = array()) {
+		
+		$customer = self::get_customer($params);
+		
+		if(!$customer) {
+			$sql = "INSERT INTO customers (customer_token,customer_email,cc_last4) VALUES (:token,:email,:last4)";
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute(array(
+				'token' => $params['id'],
+				'email' => $params['email'],
+				'last4' => $params['active_card']['last4']
+			));
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	public function create_payment($customer = array(),$params = array()) {
+		
+		$customer = self::get_customer($customer);
+		
+		if($customer) {
+			$sql = "INSERT INTO payments (customer_id,charge_token,amount) VALUES (:customer,:token,:amount)";
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute(array(
+				'customer' => $customer['customer_id'],
+				'token' => $params['id'],
+				'amount' => number_format($params['amount']/100,2,'.','')
+			));
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+	
+	public function add_user($params = array()) {
+		
+		$sql = "INSERT INTO users (user_token,user_email,user_firstname,user_lastname,user_password) VALUES (:token,:email,:first,:last,:password)";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute(array(
+			'token' => $params['user_token'],
+			'email' => $params['email'],
+			'first' => $params['first_name'],
+			'last' => $params['last_name'],
+			'password' => md5($params['password'])
+		));
+		
+		return array('token' => $params['user_token']);
+	}
+	
+	public function login_user($params = array()) {
+		$sql = "SELECT user_token FROM users WHERE user_email = :email AND user_password = :password";		
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute(array(
+			'email' => $params['email'],
+			'password' => md5($params['password'])
+		));
+		
+		$result = $stmt->fetch();
+		
+		if($result) {
+			return $result;
+		} 
+	}
+	
+	public function saveContributions($params = array()) {
+		
+		
+		$sql = "
+			INSERT INTO contributions
+			(user_id,amount)
+			VALUES
+			(2,:amount) 
+		";
+		
+		
+		
+		foreach($params['contributions'] as $c_type => $amount) {
+		
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute(array(
+				'amount' => $amount
+			));
+		}
+		
+		return true;
+	}
+	
+	public function getContributions($params = array()) {
+		$sql = "
+			SELECT SUM(amount) AS total, DATE_FORMAT(date_created,'%m/%d/%Y') AS date 
+			FROM contributions
+			WHERE user_id = 2
+			GROUP BY DATE_FORMAT(date_created,'%Y-%m-%d')
+		";
+		$stmt = $this->db->query($sql);
+		return $stmt->fetchAll();
+	}
+}
+
+
+?>
