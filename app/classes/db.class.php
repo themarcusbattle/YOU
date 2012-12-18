@@ -84,6 +84,56 @@ abstract class Db {
 		";
 	}
 	
+	public function addOneRecord($table = '',$values = array()) {
+
+		if (isset($values)) {
+			$sql  = "INSERT INTO $table (";
+			
+			// Set the cols
+			foreach ($values as $col => $value) {
+				$sql .= "$col,";
+			}
+			
+			// Check for last comma
+			$pos = strrpos($sql, ',');
+			if($pos !== false) {
+				$sql = substr_replace($sql, '', $pos, 1);
+	    }
+	    $sql .= ") VALUES (";
+	    
+			// Set the values
+			foreach ($values as $col => $value) {
+				$sql .= ":$col,";
+			}
+			
+			$sql .= ")";
+			// Check for last comma
+			$pos = strrpos($sql, ',');
+			if($pos !== false) {
+				$sql = substr_replace($sql, '', $pos, 1);
+	    }
+	    
+			$stmt = $this->db->prepare($sql);
+			$result = $stmt->execute($values);
+			
+			return $result;
+		}
+	}
+	
+	public function getOneRecord($table = '',$where = array()) {
+
+		$sql = "SELECT * FROM $table";
+		$stmt = $this->db->query($sql);
+		return $stmt->fetch();
+	}
+	
+	public function getManyRecords($table = '',$where = array()) {
+
+		$sql = "SELECT * FROM $table";
+		$stmt = $this->db->query($sql);
+		return $stmt->fetchAll();
+	}
+	
 	// return all tables from the db
 	public function getAllTables() {
 		$tables = array();

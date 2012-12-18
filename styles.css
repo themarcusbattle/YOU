@@ -7,7 +7,17 @@ body {
 .media-object {
 	max-width: 150px; }
 	
+.modal form {
+	margin-bottom: 0; }
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { 
 	
+	body {
+		padding-top: 0; }
+			
+}
+
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) { 
 
