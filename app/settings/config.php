@@ -13,7 +13,8 @@
 				'dbpass' => 'qh3FRUoXusoG'
 			),
 			'root' => '/',
-			'mode' => 'production'
+			'mode' => 'production',
+			'api' => 1
 		),
 		'marcbook.local' => array(
 			'database' => array(
@@ -24,7 +25,8 @@
 				'dbpass' => ''
 			),
 			'root' => '/mb/you/',
-			'mode' => 'development'
+			'mode' => 'development',
+			'api' => 1
 		)
 	);
 	
@@ -92,7 +94,36 @@
 		} else {
 			//echo $table . '.php already exits'; 
 		}
+		
+		// Create api classes
+		if (!file_exists('mvc/api/v' . $server[$_SERVER['HTTP_HOST']]['api'] . '/' . $table . '.api.php')) {
+			$file = $table . '.api.php';
+			$filePath = 'mvc/api/v' . $server[$_SERVER['HTTP_HOST']]['api'] . '/' . $file;
+		
+			$fileStatus = fopen($filePath, 'w') or die("can't create file");
+			
+			$data  = '<?php';
+			$data .= "\n" . 'Class ' . $table . 'Api Extends api {';
+			$data .= "\n";
+			$data .= "\n\t" . 'public function index() {';
+			$data .= "\n\t\t" .	'if($_SERVER[\'REQUEST_METHOD\'] == \'GET\') { }';
+			$data .= "\n\t\t" .	'if($_SERVER[\'REQUEST_METHOD\'] == \'PUT\') { }';
+			$data .= "\n\t\t" .	'if($_SERVER[\'REQUEST_METHOD\'] == \'POST\') { }';
+			$data .= "\n\t\t" .	'if($_SERVER[\'REQUEST_METHOD\'] == \'DELETE\') { }';
+			$data .= "\n\t" . '}';
+			$data .= "\n";
+			$data .= "\n" . '} ?>';
+			
+			fwrite($fileStatus, $data);
+			fclose($fileStatus);
+			
+		} else {
+			//echo $table . '.api.php already exits'; 
+		}
+
 	}
+	
+	
 	
 	
 	// Define which mode your app is in (Acceptable values = test,development,production)

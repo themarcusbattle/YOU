@@ -205,6 +205,7 @@
 	<p><strong>Allow users to list out how it will behave.</strong></p>
 	<p>If possible, meet with all parties to get initial details of how the end product is supposed to operate. Go prepare your drafts/wireframes and then meet again to receive approval. Iterate as many times until both sides agree that the project is ready to commence.</p>
 	<p>When you define the scope, explicitly state what you are delivering</p>
+	<p>It takes about 2 hrs to draw the initial mockup (per device). The 2nd draft should take half that time, unless the first one was completely wrong.</p>
 	<p>&nbsp;</p>
 	<h1>Ongoing</h1>
 	<table id="ongoing" class="table"> 

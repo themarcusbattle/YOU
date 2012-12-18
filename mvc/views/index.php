@@ -15,7 +15,7 @@
     <button type="button" class="close" data-dismiss="modal">&times;</button>
     <h3>New Project</h3>
   </div>
-  <form action="" method="POST">
+  <form action="api/<?=$this->registry->server[$_SERVER['HTTP_HOST']]['api']?>/places.json" method="POST">
 	  <div class="modal-body">
 	    <label>Project Name</label>
 	    <input type="text" name="name" />
