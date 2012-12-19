@@ -114,9 +114,9 @@ abstract class Db {
 	    }
 	    
 			$stmt = $this->db->prepare($sql);
-			$result = $stmt->execute($values);
+			$stmt->execute($values);
 			
-			return $result;
+			return $this->db->lastInsertID();
 		}
 	}
 	
@@ -153,9 +153,28 @@ abstract class Db {
 			$sql = "SELECT * FROM $table ";
 		}
 		
+		// Add WHERE clause
+		if ($where) {
+			foreach ($where as $col => $values) {
+				$sql .= " WHERE $col ";
+				foreach ($values as $condition => $value) {
+					$sql .= $condition . $value;
+				}
+			}
+		}
+		
 		$stmt = $this->db->query($sql);
 		return $stmt->fetchAll();
 	}
+	
+	public function updateOneRecord($table = '',$values = array()) {
+
+		$sql = "UPDATE $table SET";
+		
+		$stmt = $this->db->query($sql);
+		return $stmt->fetch();
+	}
+	
 	
 	// return all tables from the db
 	public function getAllTables() {

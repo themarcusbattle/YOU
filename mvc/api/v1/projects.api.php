@@ -29,7 +29,10 @@ Class projectsApi Extends api {
 		}
 		
 		if($_SERVER['REQUEST_METHOD'] == 'PUT') { }
-		if($_SERVER['REQUEST_METHOD'] == 'DELETE') { }
+		
+		if($_SERVER['REQUEST_METHOD'] == 'DELETE') { 
+			//$this->registry->db->updateOneRecord('places',$_POST);
+		}
 	}
 
 } ?>

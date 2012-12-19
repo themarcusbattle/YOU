@@ -4,12 +4,13 @@
 	<a class="btn" href="#new-project" data-toggle="modal"><i class="icon-plus"></i> New Project</a>
 </div>
 <p>&nbsp;</p>
+
 <table class="table">
 <? if ($projects): ?>
-	<thead>
+	<!--<thead>
 		<th>Project</th>
 		<th></th>
-	</thead>
+	</thead>-->
 	<tbody>
 	<? foreach ($projects as $project): ?>
 		<tr>
@@ -19,7 +20,11 @@
 	<? endforeach; ?>
 	</tbody>
 <? else: ?>
-
+	<tbody>
+		<tr>
+			<td>Create <a class="btn" href="#new-project" data-toggle="modal">New Project</a></td>
+		</tr>
+	</tbody>
 <? endif; ?>
 </table>
 

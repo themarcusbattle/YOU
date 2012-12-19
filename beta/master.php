@@ -206,6 +206,8 @@
 	<p>If possible, meet with all parties to get initial details of how the end product is supposed to operate. Go prepare your drafts/wireframes and then meet again to receive approval. Iterate as many times until both sides agree that the project is ready to commence.</p>
 	<p>When you define the scope, explicitly state what you are delivering</p>
 	<p>It takes about 2 hrs to draw the initial mockup (per device). The 2nd draft should take half that time, unless the first one was completely wrong.</p>
+	<p>Figure out how much time you have on average per day to devote to this project. Divide this into total effort hours. There is your due date.</p>
+	<p>First task should be to write the vision. No other tasks should be detailed without that one being completed. It is with the vision that you can itemize how to accomplish the task.</p>
 	<p>&nbsp;</p>
 	<h1>Ongoing</h1>
 	<table id="ongoing" class="table"> 
