@@ -45,8 +45,8 @@
 			'primary_key' => 'place_id',
 			'cols' => array(
 				'place_id' => 'INT(11) NOT NULL AUTO_INCREMENT',
-				'name' => 'VARCHAR(50)',
-				'date_created' => 'DATETIME'
+				'place_name' => 'VARCHAR(50)',
+				'date_created' => 'DATETIME DEFAULT TIMESTAMP'
 			)
 		),
 		'roles' => array(
@@ -55,16 +55,16 @@
 				'role_id' => 'INT(11) NOT NULL AUTO_INCREMENT',
 				'label' => 'VARCHAR(50)',
 				'place_id' => 'INT(11)',
-				'date_created' => 'DATETIME'
+				'date_created' => 'DATETIME DEFAULT TIMESTAMP'
 			)
 		),
 		'projects' => array(
 			'primary_key' => 'project_id',
 			'cols' => array(
 				'project_id' => 'INT(11) NOT NULL AUTO_INCREMENT',
-				'name' => 'VARCHAR(50)',
+				'project_name' => 'VARCHAR(50)',
 				'place_id' => 'INT(11)',
-				'date_created' => 'DATETIME'
+				'date_created' => 'DATETIME DEFAULT TIMESTAMP'
 			)
 		)
 	);
@@ -107,8 +107,8 @@
 			$data .= "\n";
 			$data .= "\n\t" . 'public function index() {';
 			$data .= "\n\t\t" .	'if($_SERVER[\'REQUEST_METHOD\'] == \'GET\') { }';
-			$data .= "\n\t\t" .	'if($_SERVER[\'REQUEST_METHOD\'] == \'PUT\') { }';
 			$data .= "\n\t\t" .	'if($_SERVER[\'REQUEST_METHOD\'] == \'POST\') { }';
+			$data .= "\n\t\t" .	'if($_SERVER[\'REQUEST_METHOD\'] == \'PUT\') { }';
 			$data .= "\n\t\t" .	'if($_SERVER[\'REQUEST_METHOD\'] == \'DELETE\') { }';
 			$data .= "\n\t" . '}';
 			$data .= "\n";

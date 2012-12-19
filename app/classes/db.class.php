@@ -122,14 +122,37 @@ abstract class Db {
 	
 	public function getOneRecord($table = '',$where = array()) {
 
-		$sql = "SELECT * FROM $table";
+		if ($where) {
+			$sql = "SELECT * FROM $table ";
+			foreach ($where as $col => $values) {
+				$sql .= "WHERE $col ";
+				foreach ($values as $condition => $value) {
+					$sql .= $condition . $value;
+				}
+			}
+		} else {
+			$sql = "SELECT * FROM $table";	
+		}
+		
 		$stmt = $this->db->query($sql);
 		return $stmt->fetch();
 	}
 	
-	public function getManyRecords($table = '',$where = array()) {
+	public function getManyRecords($table = '',$join = array(),$where = array()) {
 
-		$sql = "SELECT * FROM $table";
+		// Build sql
+		if ($join) { 
+			$sql = "SELECT * FROM $table ";
+			foreach ($join as $join_type => $cols) {
+				$sql .= $join_type . ' ';
+				foreach ($cols as $col => $value) {
+					$sql .= $col . ' ON ' . $col . '.' . $value . ' = ' . $table . '.' . $value;
+				}
+			}
+		} else {
+			$sql = "SELECT * FROM $table ";
+		}
+		
 		$stmt = $this->db->query($sql);
 		return $stmt->fetchAll();
 	}
@@ -149,7 +172,7 @@ abstract class Db {
 	}
 	
 	private function getAllColumns($table_name) {
-		$qry = $this->db->query("SELECT column_name from information_schema.columns where table_name = '$table_name'");
+		$qry = $this->db->query("SELECT column_name FROM information_schema.columns WHERE table_name = '$table_name'");
 		$result = $qry->fetchAll();
 		
 		return $result;
