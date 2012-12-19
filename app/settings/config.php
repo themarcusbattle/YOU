@@ -32,7 +32,7 @@
 	
 	
 	// Include the tables
-	include __SITE_PATH . '/app/settings/tables.php';
+	include ('app/settings/tables.php');
 	
 	
 	
