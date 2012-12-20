@@ -5,7 +5,7 @@
   <head>
     <title>Project YOU</title>
     <base href="<?=$this->registry->server[$_SERVER['HTTP_HOST']]['root']?>" target="_self">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     
     <link href="media/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
     <link href="media/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
