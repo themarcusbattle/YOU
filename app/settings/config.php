@@ -32,7 +32,7 @@
 	
 	
 	// Include the tables
-	include ('app/settings/tables.php');
+	require_once('app/settings/tables.php');
 	
 	
 	

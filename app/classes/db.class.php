@@ -73,7 +73,7 @@ abstract class Db {
 			echo "$table needs at least one column to be created <br />";
 			return false;
 		}
-		echo $sql;
+
 		$response = $this->db->query($sql);
 		return $response;
 	}
