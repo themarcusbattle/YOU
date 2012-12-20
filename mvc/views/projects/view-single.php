@@ -10,7 +10,30 @@
 	<input type="hidden" name="project_id" value="<?=$project['project_id']?>" />
 	<button class="btn btn-mini confirm">Archive Project</button>
 </form>
-<hr />
+
+
+<table class="table">
+<? if ($tasks): ?>
+	<!--<thead>
+		<th>Project</th>
+		<th></th>
+	</thead>-->
+	<tbody>
+	<? foreach ($tasks as $task): ?>
+		<tr>
+			<td><input type="checkbox" /></td>
+			<td><?=$task['task']?></td>
+		</tr>
+	<? endforeach; ?>
+	</tbody>
+<? else: ?>
+	<tbody>
+		<tr>
+			<td><a class="btn btn-mini" href="#new-task" data-toggle="modal">New Task</a></td>
+		</tr>
+	</tbody>
+<? endif; ?>
+</table>
 
 <div id="new-task" class="modal hide fade">
   <div class="modal-header">
@@ -19,21 +42,15 @@
   </div>
   <form action="api/<?=$this->registry->server[$_SERVER['HTTP_HOST']]['api']?>/tasks.json" method="POST">
 	  <div class="modal-body">
-	    <label>Project Name</label>
-	    <input type="text" name="project_name" />
-	    <label>Place</label>
-	    <select name="place_id">
+	  	<input type="hidden" name="project_id" value="<?=$project['project_id']?>" />
+	  	
+	    <textarea name="task" placeholder="Enter task"></textarea>
+	    <label>Is Milestone</label>
+	    <select name="is_milestone">
 	    	<option value="">--</option>
-	    	<option value="new"><strong>Add New Place</strong></option>
-	    	<option value="" disabled="true">--</option>
-	    	<? foreach ($places as $place): ?>
-	    	<option value="<?=$place['place_id']?>"><?=$place['place_name']?></option>
-	    	<? endforeach; ?>
+	    	<option value="1">Yes</option>
+	    	<option value="0">No</option>
 	    </select>
-	    <div id="custom-place" style="display: none;">
-	    	<label>Enter Place</label>
-	    	<input type="text" name="place_name" />
-	    </div>
 	  </div>
 	  <div class="modal-footer">
 	    <button class="btn" data-dismiss="modal">Close</button>

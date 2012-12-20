@@ -49,6 +49,7 @@
 				'project_id' => 'INT(11)',
 				'parent_task_id' => 'INT(11)',
 				'is_milestone' => 'INT(1) DEFAULT 0',
+				'completed' => 'DATETIME',
 				'date_created' => 'TIMESTAMP DEFAULT NOW()',
 				'deleted' => 'INT(1) DEFAULT 0'
 			)
