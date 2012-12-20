@@ -1,15 +1,11 @@
 <? include_once('mvc/views/inc/header.php'); ?>
 
-<div class="row-fluid">
-	<a class="btn" href="#new-task" data-toggle="modal"><i class="icon-plus"></i> New Task</a>
-</div>
-<hr />
-
 <h1><?=$project['project_name']?></h1>
-<form action="api/<?=$this->registry->server[$_SERVER['HTTP_HOST']]['api']?>/projects.json" method="DELETE">
-	<input type="hidden" name="project_id" value="<?=$project['project_id']?>" />
-	<button class="btn btn-mini confirm">Archive Project</button>
-</form>
+<div class="btn-group">
+  <button class="btn" href="#new-task" data-toggle="modal">New Task</button>
+  <button class="btn" href="#" data-toggle="modal">Edit Project</button>
+</div>
+<p>&nbsp;</p>
 
 
 <table class="table">
@@ -21,16 +17,14 @@
 	<tbody>
 	<? foreach ($tasks as $task): ?>
 		<tr>
-			<td>
-				<a class="task" 
+			<td><?=$task['task']?>
+			</td>
+			<td width="32px"><a class="task" 
 					href="#view-task" 
 					data-toggle="modal" 
 					data-task_id="<?=$task['task_id']?>"
 					data-milestone="<?=$task['is_milestone']?>"
-					>
-					<?=$task['task']?>
-				</a>
-			</td>
+					><i class="icon-pencil"></i></a></td>
 		</tr>
 	<? endforeach; ?>
 	</tbody>
@@ -63,7 +57,7 @@
 	  </div>
 	  <div class="modal-footer">
 	    <button class="btn" data-dismiss="modal">Close</button>
-	    <button type="submit" class="btn btn-primary">Create Project</button>
+	    <button type="submit" class="btn btn-primary">Add Task</button>
 	  </div>
   </form>
 </div>
@@ -88,7 +82,7 @@
 	  </div>
 	  <div class="modal-footer">
 	    <button class="btn" data-dismiss="modal">Close</button>
-	    <button type="submit" class="btn btn-primary">Create Project</button>
+	    <button type="submit" class="btn btn-primary">Done</button>
 	  </div>
   </form>
 </div>

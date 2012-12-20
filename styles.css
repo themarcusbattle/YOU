@@ -1,5 +1,6 @@
 a {
-	cursor: pointer; }
+	cursor: pointer;
+	color: inherit; }
 	
 body {
 	padding-top: 60px; }
@@ -11,11 +12,13 @@ body {
 	margin-bottom: 0; }
 
 table.table td {
-	vertical-align: middle; }
+	vertical-align: middle;
+	height: 35px; }
 	
-.task { 
+.task {
 	display: block;
-	min-height: 35px; }
+	text-align: center;
+}
 
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px) and (max-width: 979px) { 

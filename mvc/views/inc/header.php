@@ -22,13 +22,11 @@
             <span class="icon-bar"></span>
           </a>
           <a class="brand" href="#">Project YOU</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="places">Places</a></li>
-              <li><a href="projects">Projects</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
+          
+          <ul class="nav pull-right">
+            <li><a><? if(isset($title)) echo $title; ?></a></li>
+          </ul>
+          
         </div>
       </div>
     </div>

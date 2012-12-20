@@ -9,6 +9,7 @@ Class indexController Extends baseController {
 		
 		$this->registry->template->places = $this->registry->db->getManyRecords('places');
 		$this->registry->template->projects = $this->registry->db->getManyRecords('projects',$join,$where);
+		$this->registry->template->title = 'Projects';
 		$this->registry->template->show('index');
 		
 	}

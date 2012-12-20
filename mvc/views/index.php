@@ -1,7 +1,8 @@
 <? include_once('mvc/views/inc/header.php'); ?>
 
-<div class="row-fluid">
-	<a class="btn" href="#new-project" data-toggle="modal"><i class="icon-plus"></i> New Project</a>
+<h1>Projects</h1>
+<div class="btn-group">
+  <button class="btn" href="#new-project" data-toggle="modal">New Project</button>
 </div>
 <p>&nbsp;</p>
 
@@ -14,8 +15,7 @@
 	<tbody>
 	<? foreach ($projects as $project): ?>
 		<tr>
-			<td><h4><?=$project['project_name']?> <br /><small><?=$project['place_name']?></small></h4></td>
-			<td style="text-align: right; vertical-align: middle;"><a class="btn" href="projects/view/<?=$project['project_id']?>">View</a></td>
+			<td><a href="projects/view/<?=$project['project_id']?>"><h4><?=$project['project_name']?> <br /><small><?=$project['place_name']?></small></h4></a></td>
 		</tr>
 	<? endforeach; ?>
 	</tbody>
