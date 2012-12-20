@@ -155,11 +155,20 @@ abstract class Db {
 		
 		// Add WHERE clause
 		if ($where) {
+			$count = 1;
 			foreach ($where as $col => $values) {
-				$sql .= " WHERE $col ";
-				foreach ($values as $condition => $value) {
-					$sql .= $condition . $value;
+			
+				if ($count > 1) {
+					$sql .= " AND $col ";
+				} else {
+					$sql .= " WHERE $col ";
 				}
+				
+				foreach ($values as $condition => $value) {
+					$sql .= $condition . ' ' . $value;
+				}
+				
+				$count++;
 			}
 		}
 		

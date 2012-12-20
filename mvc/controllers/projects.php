@@ -14,7 +14,10 @@ Class projectsController Extends baseController {
 		$project = $this->registry->db->getOneRecord('projects',$where);
 		
 		$join = array('LEFT JOIN' => array('projects' => 'project_id'));
-		$where = array('tasks.deleted' => array('=' => 0));
+		$where = array(
+			'tasks.deleted' => array('=' => 0),
+			'tasks.project_id' => array('=' => $project_id)
+		);
 		$tasks = $this->registry->db->getManyRecords('tasks',$join,$where);
 		
 		$this->registry->template->project = $project;
