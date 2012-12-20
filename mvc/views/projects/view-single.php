@@ -21,7 +21,6 @@
 	<tbody>
 	<? foreach ($tasks as $task): ?>
 		<tr>
-			<td><input type="checkbox" /></td>
 			<td>
 				<a class="task" 
 					href="#view-task" 
