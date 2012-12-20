@@ -17,7 +17,8 @@
 	if((APP_MODE == 'development') || (!__APP_MODE)) {
 		error_reporting(E_ALL);
 	} else if (APP_MODE == 'production') {
-		error_reporting(0);
+		//error_reporting(0);
+		error_reporting(E_ALL);
 	}
 	
 	// Initialize the app classes
