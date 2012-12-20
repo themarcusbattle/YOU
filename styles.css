@@ -10,6 +10,13 @@ body {
 .modal form {
 	margin-bottom: 0; }
 
+table.table td {
+	vertical-align: middle; }
+	
+.task { 
+	display: block;
+	min-height: 35px; }
+
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px) and (max-width: 979px) { 
 	
