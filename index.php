@@ -14,9 +14,9 @@
 	include 'app/settings/config.php';
 	
 	// Mode specific settings (i.e. errors turned on for 
-	if((__APP_MODE == 'development') || (!__APP_MODE)) {
+	if((APP_MODE == 'development') || (!__APP_MODE)) {
 		error_reporting(E_ALL);
-	} else if (__APP_MODE == 'production') {
+	} else if (APP_MODE == 'production') {
 		error_reporting(0);
 	}
 	

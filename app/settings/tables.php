@@ -8,7 +8,7 @@
 				'first_name' => 'VARCHAR(50)',
 				'last_name' => 'VARCHAR(50)',
 				'email' => 'VARCHAR(128)',
-				'date_created' => 'DATETIME DEFAULT TIMESTAMP',
+				'date_created' => 'TIMESTAMP DEFAULT NOW()',
 				'deleted' => 'INT(1) DEFAULT 0'
 			)
 		),
@@ -17,7 +17,7 @@
 			'cols' => array(
 				'place_id' => 'INT(11) NOT NULL AUTO_INCREMENT',
 				'place_name' => 'VARCHAR(50)',
-				'date_created' => 'DATETIME DEFAULT TIMESTAMP',
+				'date_created' => 'TIMESTAMP DEFAULT NOW()',
 				'deleted' => 'INT(1) DEFAULT 0'
 			)
 		),
@@ -27,7 +27,7 @@
 				'role_id' => 'INT(11) NOT NULL AUTO_INCREMENT',
 				'label' => 'VARCHAR(50)',
 				'place_id' => 'INT(11)',
-				'date_created' => 'DATETIME DEFAULT TIMESTAMP',
+				'date_created' => 'TIMESTAMP DEFAULT NOW()',
 				'deleted' => 'INT(1) DEFAULT 0'
 			)
 		),
@@ -37,7 +37,19 @@
 				'project_id' => 'INT(11) NOT NULL AUTO_INCREMENT',
 				'project_name' => 'VARCHAR(50)',
 				'place_id' => 'INT(11)',
-				'date_created' => 'DATETIME DEFAULT TIMESTAMP',
+				'date_created' => 'TIMESTAMP DEFAULT NOW()',
+				'deleted' => 'INT(1) DEFAULT 0'
+			)
+		),
+		'tasks' => array(
+			'primary_key' => 'task_id',
+			'cols' => array(
+				'task_id' => 'INT(11) NOT NULL AUTO_INCREMENT',
+				'task' => 'VARCHAR(140)',
+				'project_id' => 'INT(11)',
+				'parent_task_id' => 'INT(11)',
+				'is_milestone' => 'INT(1) DEFAULT 0',
+				'date_created' => 'TIMESTAMP DEFAULT NOW()',
 				'deleted' => 'INT(1) DEFAULT 0'
 			)
 		)

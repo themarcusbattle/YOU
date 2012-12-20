@@ -37,7 +37,7 @@
 	
 	
 	// Define which mode your app is in (Acceptable values = test,development,production)
-	define ('__APP_MODE', $server[$_SERVER['HTTP_HOST']]['mode']);
+	define ('APP_MODE', $server[$_SERVER['HTTP_HOST']]['mode']);
 	
 	// Initialize any databases you've created in mvc/models
 	$registry->db = new db_local($server[$_SERVER['HTTP_HOST']]['database'],$tables);
