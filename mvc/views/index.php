@@ -22,7 +22,7 @@
 <? else: ?>
 	<tbody>
 		<tr>
-			<td>Create <a class="btn" href="#new-project" data-toggle="modal">New Project</a></td>
+			<td><a class="btn btn-mini" href="#new-project" data-toggle="modal">New Project</a></td>
 		</tr>
 	</tbody>
 <? endif; ?>
